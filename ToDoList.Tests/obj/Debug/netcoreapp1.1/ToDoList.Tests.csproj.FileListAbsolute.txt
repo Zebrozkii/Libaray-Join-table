@@ -25,3 +25,17 @@ C:/Users/csh america/desktop/ToDoList.Solution/ToDoList.Tests/obj/Debug/netcorea
 /Users/Guest/Desktop/csharp-ToDoList/ToDoList.Tests/obj/Debug/netcoreapp1.1/ToDoList.Tests.AssemblyInfo.cs
 /Users/Guest/Desktop/csharp-ToDoList/ToDoList.Tests/obj/Debug/netcoreapp1.1/ToDoList.Tests.dll
 /Users/Guest/Desktop/csharp-ToDoList/ToDoList.Tests/obj/Debug/netcoreapp1.1/ToDoList.Tests.pdb
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\ToDoList.Tests.deps.json
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\ToDoList.Tests.runtimeconfig.json
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\ToDoList.Tests.runtimeconfig.dev.json
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\ToDoList.Tests.dll
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\ToDoList.Tests.pdb
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\ToDoList.dll
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\bin\Debug\netcoreapp1.1\ToDoList.pdb
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\obj\Debug\netcoreapp1.1\ToDoList.Tests.csproj.CoreCompileInputs.cache
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\obj\Debug\netcoreapp1.1\ToDoList.Tests.AssemblyInfo.cs
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\obj\Debug\netcoreapp1.1\ToDoList.Tests.dll
+C:\Users\csh america\desktop\csharp-todolist\todolist.tests\obj\Debug\netcoreapp1.1\ToDoList.Tests.pdb
