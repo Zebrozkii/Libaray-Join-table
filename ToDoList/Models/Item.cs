@@ -8,12 +8,10 @@ namespace ToDoList.Models
 
         private string _description;
         private int _id;
-        private static List<Item> _instances = new List<Item> {};
 
         public Item(string description)
         {
             _description = description;
-            _instances.Add(this);
             _id = _instances.Count;
         }
 
@@ -29,58 +27,44 @@ namespace ToDoList.Models
 
         public static List<Item> GetAll()
         {
-            return _instances;
+            List<Item> allItems = new List<Item> { };
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM items;";
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+            while (rdr.Read())
+            {
+                int itemId = rdr.GetInt32(0);
+                string itemDescription = rdr.GetString(1);
+                Item newItem = new Item(itemDescription, itemId);
+                allItems.Add(newItem);
+            }
+
+            conn.Close();
+
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+            return allItems;
         }
 
-        public static void ClearAll()
-        {
-            _instances.Clear();
-        }
-
-        public int GetId()
-        {
-            return _id;
-        }
-
-        public static Item Find(int searchId)
-        {
-            return _instances[searchId - 1];
-        }
-
-        // public static void userAnswerAddOrView(string userAnswer)
+        // public static void ClearAll()
         // {
-        //     if (userAnswer == "add")
-        //     {
-        //         Console.WriteLine("Please enter the description for the new item:");
-        //         string userItemInput = Console.ReadLine();
-        //         Item newItem = new Item(userItemInput);
-        //         string result = newItem.GetDescription();
-        //         Console.WriteLine(result + " has been added to your list.");
-        //         Main();
-        //     }
-        //     else if (userAnswer == "view")
-        //     {
-        //         Console.WriteLine("YOUR GROCERY LIST:");
-        //         foreach (Item item in Item.GetAll())
-        //         {
-        //             Console.WriteLine("---------------------");
-        //             Console.WriteLine(item.GetDescription());
-                    
-        //         }
-        //         Main();
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("Goodbye!");
-        //     }
+        //     _instances.Clear();
         // }
 
-        // public static void Main()
+        // public int GetId()
         // {
-        //     Console.WriteLine("Welcome to the To Do List!");
-        //     Console.WriteLine("Would you like to add an item to your list or view your list? (add/view)");
-        //     string addOrView = Console.ReadLine();
-        //     userAnswerAddOrView(addOrView);
+        //     return _id;
+        // }
+
+        // public static Item Find(int searchId)
+        // {
+        //     return _instances[searchId - 1];
         // }
     }
 }
