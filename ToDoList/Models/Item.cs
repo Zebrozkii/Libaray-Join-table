@@ -6,18 +6,12 @@ namespace ToDoList.Models
   public class Item
   {
     private string _description;
-    private string _date;
     private int _id;
 
     public Item (string description, int id = 0)
     {
       _description = description;
       _id = id;
-    }
-
-    public string GetDate()
-    {
-        return _date;
     }
 
     public string GetDescription()
