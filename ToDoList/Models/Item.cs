@@ -9,11 +9,18 @@ namespace ToDoList.Models
     private string _date;
     private int _id;
 
+<<<<<<< HEAD
     public Item (string description, int id = 0, string date)
     {
       _description = description;
       _id = id;
       _date = date;
+=======
+    public Item (string description, int id = 0)
+    {
+      _description = description;
+      _id = id;
+>>>>>>> due_date_added
     }
 
     public string GetDate()
