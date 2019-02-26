@@ -6,7 +6,6 @@ namespace ToDoList.Models
   public class Item
   {
     private string _description;
-    private string _date;
     private int _id;
 
 <<<<<<< HEAD
@@ -21,11 +20,6 @@ namespace ToDoList.Models
       _description = description;
       _id = id;
 >>>>>>> due_date_added
-    }
-
-    public string GetDate()
-    {
-        return _date;
     }
 
     public string GetDescription()
