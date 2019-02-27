@@ -69,6 +69,34 @@ namespace ToDoList.Models
             }
         }
 
+        public void Delete(int id)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM items WHERE id = (@searchId);";
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int itemId = 0;
+            string itemName = "";
+            int itemCategoryId = 0;
+            while (rdr.Read())
+            {
+                itemId = rdr.GetInt32(0);
+                itemName = rdr.GetString(1);
+                itemCategoryId = rdr.GetInt32(2);
+            }
+            Item newItem = new Item(itemName, itemCategoryId, itemId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
         public static Item Find(int id)
         {
             MySqlConnection conn = DB.Connection();
