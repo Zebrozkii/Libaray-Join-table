@@ -10,7 +10,6 @@ namespace ToDoList.Tests
     public class ItemControllerTest
     {
 
-<<<<<<< HEAD
         // [TestMethod]
         // public void Create_ReturnsCorrectActionType_RedirectToActionResult()
         // {
@@ -37,34 +36,6 @@ namespace ToDoList.Tests
         //     //Assert
         //     Assert.AreEqual(result, "Index");
         // }
-=======
-      // [TestMethod]
-      // public void Create_ReturnsCorrectActionType_RedirectToActionResult()
-      // {
-      //   //Arrange
-      //   ItemsController controller = new ItemsController();
-
-      //   //Act
-      //   IActionResult view = controller.Create("Walk the dog");
-
-      //   //Assert
-      //   Assert.IsInstanceOfType(view, typeof(RedirectToActionResult));
-      // }
-
-      // [TestMethod]
-      // public void Create_RedirectsToCorrectAction_Index()
-      // {
-      //   //Arrange
-      //   ItemsController controller = new ItemsController();
-      //   RedirectToActionResult actionResult = controller.Create("Walk the dog") as RedirectToActionResult;
-
-      //   //Act
-      //   string result = actionResult.ActionName;
-
-      //   //Assert
-      //   Assert.AreEqual(result, "Index");
-      // }
->>>>>>> a57a16d608e7443090f0f1b8521ce48455c84a12
 
     }
 }
