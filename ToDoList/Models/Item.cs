@@ -79,17 +79,7 @@ namespace ToDoList.Models
             searchId.ParameterName = "@searchId";
             searchId.Value = id;
             cmd.Parameters.Add(searchId);
-            var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int itemId = 0;
-            string itemName = "";
-            int itemCategoryId = 0;
-            while (rdr.Read())
-            {
-                itemId = rdr.GetInt32(0);
-                itemName = rdr.GetString(1);
-                itemCategoryId = rdr.GetInt32(2);
-            }
-            Item newItem = new Item(itemName, itemCategoryId, itemId);
+            cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)
             {
