@@ -69,7 +69,7 @@ namespace ToDoList.Models
             }
         }
 
-        public void Delete(int id)
+        public void Delete()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -77,13 +77,12 @@ namespace ToDoList.Models
             cmd.CommandText = @"DELETE FROM items WHERE id = (@searchId);";
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@searchId";
-            searchId.Value = id;
+            searchId.Value = this.GetId();
             cmd.Parameters.Add(searchId);
             cmd.ExecuteNonQuery();
-            conn.Close();
             if (conn != null)
             {
-                conn.Dispose();
+                conn.Close();
             }
         }
 

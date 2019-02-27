@@ -47,11 +47,18 @@ namespace ToDoList.Controllers
       Category foundCategory = Category.Find(categoryId);
       Item newItem = new Item(itemDescription, categoryId);
       List<Item> categoryItems = foundCategory.GetItems();
+      newItem.Save();
       model.Add("items", categoryItems);
       model.Add("category", foundCategory);
       return View("Show", model);
     }
 
-    
+    [HttpPost("/categories/{categoryId}")]
+      public ActionResult DeleteItem(int categoryId, int itemId)
+      {
+        Item item = Item.Find(itemId);           
+        item.Delete();
+        return RedirectToAction("Show");
+      }    
   }
 }
