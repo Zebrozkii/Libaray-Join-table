@@ -25,8 +25,6 @@ namespace ToDoList
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseDeveloperExceptionPage();
-            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -46,4 +44,5 @@ namespace ToDoList
     {
         public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=to_do_list;";
     }
+
 }
