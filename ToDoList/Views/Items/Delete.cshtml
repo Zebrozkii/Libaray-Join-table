@@ -1,0 +1,8 @@
+<h1>Are you sure you want to delete @Model["item"].GetDescription()?</h1>
+
+<form action='/categories/@Model["category"].GetId()/items' method='post'>
+    <button type='submit'>YES</button>
+</form>
+<form action='/categories/@Model["category"].GetId()'>
+    <button type='submit'>NO</button>
+</form>
