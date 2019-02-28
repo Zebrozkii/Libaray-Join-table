@@ -62,23 +62,6 @@ namespace ToDoList.Controllers
       return RedirectToAction("Index");
     }
 
-    // Attempt to delete catagory 
-
-    [HttpGet("/categories/{categoryId}/delete")]
-    public ActionResult Delete(int categoryId)
-    {
-        Dictionary<string, object> model = new Dictionary<string, object>();
-        Category category = Category.Find(categoryId);
-        model.Add("category", category);
-        return View(model);
-    }   
-
-    [HttpPost("/categories/{categoryId}")]
-    public ActionResult DeleteCategory(int categoryId)
-    {
-      Category foundCategory = Category.Find(categoryId);
-      foundCategory.Delete();
-      return RedirectToAction("Index");
-    }   
+    // Attempt to delete catagory   
   }
 }
