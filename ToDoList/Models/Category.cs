@@ -155,5 +155,22 @@ namespace ToDoList.Models
             }
         }
 
+        public void Delete()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM categories WHERE id = (@categoryId);";
+            MySqlParameter categoryId = new MySqlParameter();
+            categoryId.ParameterName = "@categoryId";
+            categoryId.Value = this.GetId();
+            cmd.Parameters.Add(categoryId);
+            cmd.ExecuteNonQuery();
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
     }
 }
