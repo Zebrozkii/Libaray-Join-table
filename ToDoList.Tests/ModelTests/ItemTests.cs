@@ -12,6 +12,7 @@ namespace ToDoList.Tests
         public void Dispose()
         {
             Item.ClearAll();
+            Category.ClearAll();
         }
 
         public ItemTest()
@@ -162,19 +163,49 @@ namespace ToDoList.Tests
         }
 
         [TestMethod]
-        public void Delete_DeletesItemFromDatabase_NoItem()
+        public void Delete_DeletesItemAssociationFromDatabase_ItemList()
         {
             //Arrange
-            Item testItem = new Item("Walk the Dog", 1);
-            Item emptyList = new Item("", 0);
+            Category testCategory = new Category("Home stuff");
+            testCategory.Save();
+            string testDescription = "Mow the lawn";
+            Item testItem = new Item(testDescription);
+            testItem.Save();
 
-            //Act
-            Item foundItem = Item.Find(testItem.GetId());
-            foundItem.Delete(1);
+            testItem.AddCategory(testCategory);
+            testItem.Delete();
+            List<Item> resultCategoryItems = testCategory.GetItems();
+            List<Item> testCategoryItems = new List<Item> {};
 
-            //Assert
-            Assert.AreEqual(foundItem, emptyList);
-            
+            CollectionAssert.AreEqual(testCategoryItems, resultCategoryItems);
+        }
+
+        [TestMethod]
+        public void GetCategories_ReturnsAllItemCategories_CategoryList()
+        {
+            Item testItem = new Item("Mow the lawn");
+            testItem.Save();
+            Category testCategory1 = new Category("Home stuff");
+            testCategory1.Save();
+            Category testCategory2 = new Category("Work stuff");
+            testCategory2.Save();
+            testItem.AddCategory(testCategory1);
+            List<Category> result = testItem.GetCategories();
+            List<Category> testList = new List<Category>{testCategory1};
+            CollectionAssert.AreEqual(testList, result);
+        }
+
+        [TestMethod]
+        public void AddCategory_AddsCategoryToItem_CategoryList()
+        {
+            Item newItem = new Item("Mow the lawn");
+            newItem.Save();
+            Category testCategory = new Category("Home Stuff");
+            testCategory.Save();
+            newItem.AddCategory(testCategory);
+            List<Category> result = newItem.GetCategories();
+            List<Category> testList = new List<Category>{testCategory};
+            CollectionAssert.AreEqual(testList, result);
         }
 
         // [TestMethod]
