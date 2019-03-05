@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using System;
 
 namespace ToDoList.Models
 {
@@ -88,15 +89,29 @@ namespace ToDoList.Models
             return newCategory;
         }
 
-        public List<Item> GetItems()
+        public List<Item> GetItems(bool due_date_sort = false, bool name_sort = false)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT items.* FROM categories 
-                JOIN categories_items ON (categories.id = categories_items.category_id) 
-                JOIN items ON (categories_items.item_id = items.id)
-                WHERE categories.id = @CategoryId;";
+            if  ((!due_date_sort) && (!name_sort))
+            {
+                cmd.CommandText = @"SELECT items.* FROM categories 
+                    JOIN categories_items ON (categories.id = categories_items.category_id) 
+                    JOIN items ON (categories_items.item_id = items.id)
+                    WHERE categories.id = @CategoryId;";
+            } else if (!name_sort) {
+                cmd.CommandText = @"SELECT items.* FROM categories 
+                    JOIN categories_items ON (categories.id = categories_items.category_id) 
+                    JOIN items ON (categories_items.item_id = items.id)
+                    WHERE categories.id = @CategoryId ORDER BY items.due_date;";
+            } else {
+                cmd.CommandText = @"SELECT items.* FROM categories 
+                    JOIN categories_items ON (categories.id = categories_items.category_id) 
+                    JOIN items ON (categories_items.item_id = items.id)
+                    WHERE categories.id = @CategoryId ORDER BY items.description;";
+            }
+        // Console.WriteLine("{0} {1}", due_date_sort, cmd.CommandText);
             MySqlParameter categoryId = new MySqlParameter();
             categoryId.ParameterName = "@CategoryId";
             categoryId.Value = _id;
@@ -107,7 +122,8 @@ namespace ToDoList.Models
             {
                 int thisItemId = rdr.GetInt32(0);
                 string itemDescription = rdr.GetString(1);
-                Item foundItem = new Item(itemDescription, thisItemId);
+                DateTime itemDueDate = rdr.GetDateTime(2);
+                Item foundItem = new Item(itemDescription, itemDueDate, thisItemId);
                 items.Add(foundItem);
             }
             conn.Close();

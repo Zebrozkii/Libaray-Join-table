@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using System;
 
 namespace ToDoList.Models
 {
     public class Item
     {
         private string _description;
+        private DateTime _due_date;
         private int _id;
 
-        public Item(string description, int id = 0)
+        public Item(string description, DateTime due_date, int id = 0)
         {
             _description = description;
             _id = id;
+            _due_date = due_date;
         }
 
         public string GetDescription()
@@ -22,6 +25,11 @@ namespace ToDoList.Models
         public void SetDescription(string newDescription)
         {
             _description = newDescription;
+        }
+
+        public DateTime GetDueDate()
+        {
+            return _due_date;
         }
 
         public int GetId()
@@ -41,7 +49,8 @@ namespace ToDoList.Models
             {
                 int itemId = rdr.GetInt32(0);
                 string itemDescription = rdr.GetString(1);
-                Item newItem = new Item(itemDescription, itemId);
+                DateTime itemDueDate = rdr.GetDateTime(2);
+                Item newItem = new Item(itemDescription, itemDueDate, itemId);
                 allItems.Add(newItem);
             }
             conn.Close();
@@ -96,12 +105,14 @@ namespace ToDoList.Models
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
             int itemId = 0;
             string itemName = "";
+            DateTime itemDueDate = Convert.ToDateTime("01/01/2000");
             while (rdr.Read())
             {
                 itemId = rdr.GetInt32(0);
                 itemName = rdr.GetString(1);
+                itemDueDate = rdr.GetDateTime(2);
             }
-            Item newItem = new Item(itemName, itemId);
+            Item newItem = new Item(itemName, itemDueDate, itemId);
             conn.Close();
             if (conn != null)
             {
@@ -121,7 +132,8 @@ namespace ToDoList.Models
                 Item newItem = (Item)otherItem;
                 bool idEquality = (this.GetId() == newItem.GetId());
                 bool descriptionEquality = (this.GetDescription() == newItem.GetDescription());
-                return (idEquality && descriptionEquality);
+                bool dueDateEquality = (this.GetDueDate() == newItem.GetDueDate());
+                return (idEquality && descriptionEquality && dueDateEquality);
             }
         }
 
@@ -130,13 +142,15 @@ namespace ToDoList.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO items (description) VALUES (@description);";
+            cmd.CommandText = @"INSERT INTO items (description, due_date) VALUES (@description, @due_date);";
             MySqlParameter description = new MySqlParameter();
             description.ParameterName = "@description";
             description.Value = this._description;
             cmd.Parameters.Add(description);
-            // saving another column data
-            // end new column data
+            MySqlParameter dueDate = new MySqlParameter();
+            dueDate.ParameterName = "@due_date";
+            dueDate.Value = _due_date;//.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            cmd.Parameters.Add(dueDate);
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
             conn.Close();
@@ -146,12 +160,12 @@ namespace ToDoList.Models
             }
         }
 
-        public void Edit(string newDescription)
+        public void Edit(string newDescription, DateTime newDueDate)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"UPDATE items SET description = @newDescription WHERE id = @searchId;";
+            cmd.CommandText = @"UPDATE items SET description = @newDescription, due_date = @dueDate WHERE id = @searchId;";
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@searchId";
             searchId.Value = _id;
@@ -160,8 +174,13 @@ namespace ToDoList.Models
             description.ParameterName = "@newDescription";
             description.Value = newDescription;
             cmd.Parameters.Add(description);
+            MySqlParameter dueDate = new MySqlParameter();
+            dueDate.ParameterName = "@dueDate";
+            dueDate.Value = newDueDate; //newDueDate.ToString("yyyy-MM-dd HH:mm:ss.fff"); 
+            cmd.Parameters.Add(dueDate);
             cmd.ExecuteNonQuery();
             _description = newDescription;
+            _due_date = newDueDate;
             conn.Close();
             if (conn != null)
             {

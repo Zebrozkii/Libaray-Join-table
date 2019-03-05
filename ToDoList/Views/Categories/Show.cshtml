@@ -1,9 +1,11 @@
 <h3>Here are all the items in this category:</h3>
 
+<a href="/categories/@Model["category"].GetId()/sorted_due_dates">Sort by due date</a>
+<a href="/categories/@Model["category"].GetId()/sorted_names">Sort by name</a>
 <ol>
 @foreach (var item in @Model["items"])
 {
-  <li><a href='/categories/@Model["category"].GetId()/items/@item.GetId()'>@item.GetDescription()</a></li>
+  <li><a href='/categories/@Model["category"].GetId()/items/@item.GetId()'>@item.GetDescription()</a> Due Date: @item.GetDueDate().ToString("yyyy-MM-dd")</li>
 }
 </ol>
 
