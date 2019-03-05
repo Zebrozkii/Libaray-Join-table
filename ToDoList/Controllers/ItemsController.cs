@@ -7,23 +7,48 @@ namespace ToDoList.Controllers
 {
     public class ItemsController : Controller
     {
-
-        [HttpGet("/categories/{categoryId}/items/new")]
-        public ActionResult New(int categoryId)
+        [HttpGet("/items")]
+        public ActionResult Index()
         {
-            Category category = Category.Find(categoryId);
-            return View(category);
+            List<Item> allItems = Item.GetAll();
+            return View(allItems);
         }
 
-        [HttpGet("/categories/{categoryId}/items/{itemId}")]
-        public ActionResult Show(int categoryId, int itemId)
+        [HttpGet("/items/new")]
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        [HttpPost("/items")]
+        public ActionResult Create(string itemDescription, DateTime dueDate)
+        {
+            Item newItem = new Item(itemDescription, dueDate);
+            newItem.Save();
+            List<Item> allItems = Item.GetAll();
+            return View("Index", allItems);
+        }
+
+        [HttpGet("/items/{id}")]
+        public ActionResult Show(int id)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            Item selectedItem = Item.Find(id);
+            List<Category> itemCategories = selectedItem.GetCategories();
+            List<Category> allCategories = Category.GetAll();
+            model.Add("selectedItem", selectedItem);
+            model.Add("itemCategories", itemCategories);
+            model.Add("allCategories", allCategories);
+            return View(model);
+        }
+
+        [HttpPost("/items/{itemId}/categories/new")]
+        public ActionResult AddCategory(int itemId, int categoryId)
         {
             Item item = Item.Find(itemId);
-            Dictionary<string, object> model = new Dictionary<string, object>();
             Category category = Category.Find(categoryId);
-            model.Add("item", item);
-            model.Add("category", category);
-            return View(model);
+            item.AddCategory(category);
+            return RedirectToAction("Show",  new { id = itemId });
         }
 
         [HttpPost("/items/delete")]
