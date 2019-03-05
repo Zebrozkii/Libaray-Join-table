@@ -89,27 +89,22 @@ namespace ToDoList.Models
             return newCategory;
         }
 
-        public List<Item> GetItems(bool due_date_sort = false, bool name_sort = false)
+        public List<Item> GetItems(string sortBy = "")
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            if  ((!due_date_sort) && (!name_sort))
+            if  (sortBy == "")
             {
                 cmd.CommandText = @"SELECT items.* FROM categories 
                     JOIN categories_items ON (categories.id = categories_items.category_id) 
                     JOIN items ON (categories_items.item_id = items.id)
                     WHERE categories.id = @CategoryId;";
-            } else if (!name_sort) {
-                cmd.CommandText = @"SELECT items.* FROM categories 
-                    JOIN categories_items ON (categories.id = categories_items.category_id) 
-                    JOIN items ON (categories_items.item_id = items.id)
-                    WHERE categories.id = @CategoryId ORDER BY items.due_date;";
             } else {
                 cmd.CommandText = @"SELECT items.* FROM categories 
                     JOIN categories_items ON (categories.id = categories_items.category_id) 
                     JOIN items ON (categories_items.item_id = items.id)
-                    WHERE categories.id = @CategoryId ORDER BY items.description;";
+                    WHERE categories.id = @CategoryId ORDER BY items." + sortBy + ";";
             }
         // Console.WriteLine("{0} {1}", due_date_sort, cmd.CommandText);
             MySqlParameter categoryId = new MySqlParameter();

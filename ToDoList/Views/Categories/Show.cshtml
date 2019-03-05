@@ -1,7 +1,7 @@
 <h3>Here are all the items in this category:</h3>
 
-<a href="/categories/@Model["category"].GetId()/sorted_due_dates">Sort by due date</a>
-<a href="/categories/@Model["category"].GetId()/sorted_names">Sort by name</a>
+<a href="/categories/@Model["category"].GetId()/due_date">Sort by due date</a>
+<a href="/categories/@Model["category"].GetId()/description">Sort by name</a>
 <ol>
 @foreach (var item in @Model["items"])
 {
