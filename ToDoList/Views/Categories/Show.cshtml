@@ -10,7 +10,7 @@
 <ol>
 @foreach (var item in @Model["categoryItems"])
 {
-  <li><a href='/categories/@Model["category"].GetId()/items/@item.GetId()'>@item.GetDescription()</a> Due Date: @item.GetDueDate().ToString("yyyy-MM-dd")</li>
+  <li><a href='/items/@item.GetId()'>@item.GetDescription()</a> Due Date: @item.GetDueDate().ToString("yyyy-MM-dd")</li>
 }
 </ol>
 }
