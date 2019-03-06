@@ -86,8 +86,17 @@ namespace ToDoList.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object>();
             Item item = Item.Find(itemId);
+            item.Delete();
             model.Add("item", item);
             return View(model);
+        }
+
+        [HttpPost("/items/deleted")]
+        public ActionResult DeleteItem(int itemId)
+        {
+            Item item = Item.Find(itemId);
+            item.Delete();
+            return RedirectToAction("Index");
         }
     }
 }
