@@ -1,24 +1,24 @@
 @using Library.Models;
 
-<h1>To Do List Item Details: </h1>
+<h1>Book Details: </h1>
 
-<h2>Item: @Model["selectedItem"].GetDescription()</h2>
-<h2>Due Date: @Model["selectedItem"].GetDueDate().ToString("yyyy-MM-dd")</h2>
+<h2>Item: @Model["selectedBook"].GetDescription()</h2>
 
-@if (@Model["itemCategories"].Count != 0)
+
+@if (@Model["bookAuthors"].Count != 0)
 {
-    <h4>This item has these categories:</h4>
+    <h4>This item has these author:</h4>
     <ul>
-    @foreach (Category category in @Model["itemCategories"])
+    @foreach (Author author in @Model["bookAuthors"])
     {
-        <li>@category.GetName()</li>
+        <li>@author.GetName()</li>
     }
     </ul>
 }
 
 <h4>Add a category to this item:</h4>
 
-<form action='/items/@Model["selectedItem"].GetId()/categories/new' method='post'>
+<form action='/books/@Model["selectedBooks"].GetId()/books/new' method='post'>
     <label for='categoryId'>Select a category</label>
     <select id='categoryId' name='categoryId' type='text'>
     @foreach (var category in @Model["allCategories"])
@@ -30,7 +30,7 @@
 </form>
 
 
-<a href='/items/new'>Add another item</a>
-<a href='/items/@Model["selectedItem"].GetId()/edit'>Update item</a>
-<a href='/items/@Model["selectedItem"].GetId()/delete'>Delete this item</a>
-<a href='/categories'>View all categories</a>
+<a href='/books/new'>Add another item</a>
+<a href='/books/@Model["selectedBooks"].GetId()/edit'>Update item</a>
+<a href='/books/@Model["selectedBooks"].GetId()/delete'>Delete this item</a>
+<a href='/authors'>View all categories</a>
