@@ -1,0 +1,34 @@
+@using Library.Models;
+
+
+@if (@Model["authorBook"].Count != 0)
+{
+<h3>Here are all the items in this category:</h3>
+
+<ol>
+@foreach (var book in @Model["authorBook"])
+{
+  <li><a href='/books/@book.GetId()'>@book.GetBookTitle()</a></li>
+}
+</ol>
+}
+
+<h4>Add a item to this category:</h4>
+
+<form action='/authors/@Model["author"].GetId()/books/new' method='post'>
+  <label for='bookId'>Select a item</label>
+  <select id='bookId' name='bookId' type='text'>
+
+    @foreach (var item in @Model["allItems"])
+    {
+      <option value='@item.GetId()'>@item.GetBookTitle()</option>
+    }
+
+  </select>
+  <button type='submit'>Add</button>
+</form>
+
+<p><a href='/books/new'>Add a new item</a></p>
+<p><a href="/authors/delete">Delete this category</a></p>
+<p><a href='/authors'>Return to category list</a></p>
+<p><a href='/'>Return to Main Page</a></p>
